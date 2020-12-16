@@ -7,7 +7,7 @@ Written as a convenience wrapper of
 [Pandas](https://pandas.pydata.org/) and 
 [Laspy](https://github.com/grantbrown/laspy) 
 to streamline reading, writing and converting between point clouds of different file formats.
-See [Dev](Dev) section for supported file type formats. 
+See [Dev](#dev) section for supported file type formats. 
 
 
 Tested using Python 3.8
