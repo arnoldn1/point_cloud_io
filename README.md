@@ -7,7 +7,7 @@ Written as a convenience wrapper of
 [Pandas](https://pandas.pydata.org/) and 
 [Laspy](https://github.com/grantbrown/laspy) 
 to streamline reading, writing and converting between point clouds of different file formats.
-See [Dev](Dev) section for supported file type formats. 
+See [Dev](#dev) section for supported file type formats. 
 
 
 Tested using Python 3.8
@@ -17,7 +17,7 @@ This project is released under GNU General Public License.
 
 ### Install
 clone repo:\
-`$ git clone ...`
+`$ git clone https://github.com/arnoldn1/point_cloud_io.git`
 
 change into directory\
 `$ cd point_cloud_io`
@@ -34,7 +34,7 @@ xyz = np.random.default_rng().random((100, 3))
 # file type will be inferred by the file extension, i.e., .xyz
 pcio.write(xyz, 'path/to/file.xyz')
 
-# return_type indicates how the read object should be return, 
+# return_type indicates how the read object should return, 
 # e.g., 'numpy' returns a np.array
 xyz = pcio.read('path/to/file.xyz', return_type='numpy')    
 ```
