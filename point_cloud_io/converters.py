@@ -22,10 +22,19 @@ def to_pcd(obj: ReturnTypes, rgb: ReturnTypes = None) -> PointCloud:
 
     elif isinstance(obj, rtypes['pandas']):
         pcd.points = o3d.utility.Vector3dVector(obj[['x', 'y', 'z']].to_numpy())
-        if all([k in list(obj.keys()) for k in 'rgb']):
-            pcd.colors = o3d.utility.Vector3dVector(obj[['r', 'g', 'b']].to_numpy())
+        pd_keys = list(obj.keys())
+        # check rgb
+        rgb_keys = ['r', 'g', 'b']
+        if all([k in pd_keys for k in rgb_keys]):
+            pcd.colors = o3d.utility.Vector3dVector(obj[rgb_keys].to_numpy())
             return pcd
-        elif rgb is None:
+        # check rgb floats
+        rgbf_keys = ['rf', 'gf', 'bf']
+        if all([k in pd_keys for k in rgbf_keys]):
+            pcd.colors = o3d.utility.Vector3dVector(obj[rgbf_keys].to_numpy())
+            return pcd
+
+        if rgb is None:
             return pcd
     else:
         raise NotImplementedError
@@ -46,14 +55,27 @@ def to_np(obj: ReturnTypes) -> ndarray:
 
     elif isinstance(obj, rtypes['pandas']):
         pd_keys = list(obj.keys())
-        if all([k in pd_keys for k in 'xyz']):
-            xyz = obj[['x', 'y', 'z']].to_numpy()
-            if not all([k in pd_keys for k in 'rgb']):
-                return xyz
-        if all([k in pd_keys for k in 'rgb']):
-            rgb = obj[['r', 'g', 'b']].to_numpy()
+        # check xyz values
+        xyz_keys = ['x', 'y', 'z']
+        if all([k in pd_keys for k in xyz_keys]):
+            xyz = obj[xyz_keys].to_numpy()
+
+        # check rgb values
+        rgb_keys = ['r', 'g', 'b']
+        if all([k in pd_keys for k in rgb_keys]):
+            rgb = obj[rgb_keys].to_numpy()
             if not all([k in pd_keys for k in 'xyz']):
                 return rgb
+
+        # check rgb float values
+        rgbf_keys = ['rf', 'gf', 'bf']
+        if all([k in pd_keys for k in rgbf_keys]):
+            rgb = obj[rgbf_keys].to_numpy()
+            if not all([k in pd_keys for k in 'xyz']):
+                return rgb
+
+        if rgb is None:
+            return xyz
 
     elif isinstance(obj, rtypes['o3d']):
         if obj.has_points():

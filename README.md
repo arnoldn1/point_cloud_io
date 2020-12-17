@@ -49,6 +49,14 @@ returns a pandas Dataframe, columns names will be ['x', 'y', 'z'] and ['r', 'g',
 - `'o3d'` 
 returns a open3d PointCloud object containing points and colour, if provided.
 
+### Note about .txt and .asc files
+For `.txt` files, assumes first row to be header with column names and uses `','` as delimiter.
+ 
+Similarly, the first row of `.asc` files are assumed to have a header from CloudCompare ascii save default.
+The header row is preceded by `'//'` and uses `' '` as a delimiter.
+
+Default delimiters can be overridden using `delimiter=` keyword.
+
 ## Dev
 Implementation list:
 - [x] .las      (laspy)
@@ -60,6 +68,7 @@ Implementation list:
 - [x] .ply      (open3d)
 - [x] .pcd      (open3d)
 - [x] .txt      (pandas)
+- [x] .asc      (pandas)
 - [ ] .pickle   (pickle)
 - [ ] .feather  (pandas)
 - [ ] .hdf5     (pandas)
